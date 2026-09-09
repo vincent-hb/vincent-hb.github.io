@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+._*
+__MACOSX/
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+*.swp
+*~
+
+# Source files not meant for the web
+*.key
+*.eps
+
+# Dropbox
+.dropbox
+.dropbox.attr
