@@ -17,3 +17,10 @@ __MACOSX/
 # Dropbox
 .dropbox
 .dropbox.attr
+
+# Local design-history copies. Kept out of the repo on purpose: anything
+# committed here is served publicly by GitHub Pages, and a second copy of
+# index.html would be a publicly reachable, search-indexable duplicate.
+# The canonical history is the git tag v1-pre-redesign.
+index.pre-redesign.html
+*.pre-redesign.html
