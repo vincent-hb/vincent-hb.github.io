@@ -34,6 +34,11 @@
 		right: auto;
 		top: auto;
 		width: 100%;
+		/* From this breakpoint down the sidebar becomes skel's off-canvas
+		   panel, which does its own scrolling. Undo the desktop overflow
+		   rule so we don't nest a second scrolling box inside it. */
+		overflow-x: visible;
+		overflow-y: visible;
 	}
 
 		#header > footer {
@@ -60,7 +65,7 @@
 /* Layers */
 
 	#titleBar {
-		background: #222;
+		background: #437CC8;
 		color: #fff;
 		min-width: 320px;
 	}
@@ -73,7 +78,7 @@
 			line-height: 44px;
 			padding: 0 1em;
 			width: 100%;
-			text-align: left;
+			text-align: right;
 		}
 
 		#titleBar .toggle {
@@ -82,7 +87,7 @@
 			position: absolute;
 			top: 0;
 			width: 6em;
-			right: 0;
+			left: 0;
 		}
 
 			#titleBar .toggle:before {
@@ -95,7 +100,7 @@
 			}
 
 			#titleBar .toggle:before {
-				background: #cccccc;
+				background: transparent;
 				color: #ffffff;
 				content: '\f0c9';
 				display: block;
@@ -106,12 +111,12 @@
 				text-align: center;
 				top: 0;
 				width: 64px;
-				right: 0;
+				left: 0;
 			}
 
 	#sidePanel {
-		background: #000000;
-		color: #cccccc;
+		background: #437CC8;
+		color: #ffffff;
 	}
 
 		#sidePanel #header {

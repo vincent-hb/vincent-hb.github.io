@@ -1,7 +1,7 @@
 @import 'vars';
 @import 'mixins';
 @import 'font-awesome.min.css';
-@import url('http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400');
 
 /*
 	Read Only by HTML5 UP
@@ -849,6 +849,12 @@ $size-header: 23em;
 		top: 0;
 		width: $size-header;
 
+		/* The sidebar is fixed at the viewport height, so once the nav has
+		   enough items to overflow a short screen the tail of the menu is
+		   clipped and unreachable. Let it scroll instead. */
+		overflow-x: hidden;
+		overflow-y: auto;
+
 		@if $side-header == 'right' {
 			right: 0;
 		}
@@ -879,12 +885,12 @@ $size-header: 23em;
 		}
 
 		> header {
-			padding: 3em;
+			padding: 1.5em;
 			
 			.avatar {
 				display: block;
-				margin: 0 auto $size-element-margin auto;
-				width: 8em;
+				margin: 0 auto 1.5em auto;
+				width: 5.5em;
 			}
 
 			h1 {
@@ -933,7 +939,7 @@ $size-header: 23em;
 						border: 0;
 						color: $color-header-fg-bold !important;
 						display: block;
-						padding: 0.85em 0;
+						padding: 0.6em 0;
 						text-decoration: none;
 						
 						&.active {

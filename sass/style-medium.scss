@@ -41,6 +41,12 @@
 		top: auto;
 		width: 100%;
 
+		/* From this breakpoint down the sidebar becomes skel's off-canvas
+		   panel, which does its own scrolling. Undo the desktop overflow
+		   rule so we don't nest a second scrolling box inside it. */
+		overflow-x: visible;
+		overflow-y: visible;
+
 		> footer {
 			bottom: auto;
 			left: auto;

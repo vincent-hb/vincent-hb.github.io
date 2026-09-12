@@ -24,3 +24,24 @@ __MACOSX/
 # The canonical history is the git tag v1-pre-redesign.
 index.pre-redesign.html
 *.pre-redesign.html
+
+# Full-resolution photo and figure originals. The pages load the compressed
+# derivatives sitting next to these (images/team-*.webp, images/castor-pal5.webp
+# and so on), so the originals are kept locally only rather than published as
+# multi-megabyte files nobody downloads. Add new originals here as they arrive.
+/images/CASTOR_Pal5.png
+/images/SMU Burke-Gafney Observatory Shoot*.jpg
+/images/kristen.png
+/images/mackenzie.png
+/images/nolan.png
+/images/vincent.png
+/images/castor.001.png
+
+# Images no page loads any more: figures replaced during the redesign, and
+# leftovers from the HTML5 UP template. Kept on disk, out of the repo.
+/images/BH_GC.jpeg
+/images/SMU_Logo_WHT.png
+/images/vhb-observatory.jpg
+/images/pic01.jpg
+/images/pic02.jpg
+/images/pic03.jpg

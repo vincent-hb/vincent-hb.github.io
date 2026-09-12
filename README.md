@@ -10,20 +10,36 @@ Live at <https://vincent-hb.github.io>
 
 | Path | Purpose |
 | --- | --- |
-| `index.html` | The single-page main site |
+| `index.html` | About me — the landing page |
+| `research.html` | Research programme, publications, recent highlights |
+| `team.html`, `join.html`, `alumni.html` | The STRIDES group, openings, past members |
+| `outreach.html`, `contact.html` | Observatory and media, contact details |
 | `css/`, `sass/`, `fonts/`, `js/` | Template assets (Sass sources included) |
-| `images/` | Figures and photos used by the site |
+| `images/`, `videos/` | Figures, photos and clips used by the pages |
 | `clusters2025/` | Standalone sub-site, served at `/clusters2025/` |
 | `google7f031b37c4cd342d.html` | Google Search Console verification |
 | `.nojekyll` | Tells GitHub Pages to serve files as-is, without Jekyll |
 
+Every page carries its own copy of the sidebar and footer, so a change to the
+navigation has to be repeated across all seven.
+
 ## Editing
 
-It is a static site — no build step. Edit `index.html`, commit, and push to
-`main`; GitHub Pages redeploys within a minute or two.
+It is a static site — no build step. Edit the page, commit, and push to `main`;
+GitHub Pages redeploys within a minute or two.
 
-If you change styles, edit the `sass/` sources and compile to `css/style.css`
-rather than editing the CSS directly.
+Styles live in `css/style.css`, which is edited directly. The `sass/` sources
+were kept in step early in the redesign (the sidebar move, the compacted
+navigation) but are no longer the source of truth: the later work — the sidebar
+sub-navigation, the figure floats, the highlight blocks, the team portraits, the
+citation refs — exists only in the compiled CSS, so recompiling the Sass would
+discard it. Those custom rules are gathered towards the end of `css/style.css`,
+each behind a comment explaining what it is for. Breakpoint overrides are in
+`css/style-{xlarge,large,medium,small,xsmall}.css`.
+
+Full-resolution photo and figure originals are kept out of the repo (see
+`.gitignore`); only the compressed derivatives the pages actually load are
+committed.
 
 ## Credits
 

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @import url(font-awesome.min.css);
-@import url("http://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
+@import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
 
 /*
 	Read Only by HTML5 UP
@@ -15,7 +15,7 @@
 	}
 
 	body, input, select, textarea {
-		color: #888;
+		color: #000000;
 		font-family: "Lato", sans-serif;
 		font-size: 16pt;
 		font-weight: 400;
@@ -28,20 +28,33 @@
 		-o-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		-ms-transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 		transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-		border-bottom: solid 1px #e4e4e4;
-		color: inherit;
+		/* The stock template used colour: inherit with an #e4e4e4 underline,
+		   which is 1.3:1 against white -- links were indistinguishable from
+		   body text. Links now carry the site's teal accent, and hover
+		   strengthens the underline instead of removing it. */
+		/* Transparent rather than absent, so the 1px is always reserved and
+		   the text does not shift when the underline appears on hover. */
+		border-bottom: solid 1px transparent;
+		color: #3A6DB0;
 		text-decoration: none;
 	}
 
 		a:hover {
-			border-bottom-color: transparent;
-			color: #000000 !important;
+			border-bottom-color: #3A6DB0;
+			color: #2C5890 !important;
 		}
 
 	strong, b {
-		color: #aaaaaa;
+		color: #000000;
 		font-weight: 700;
 	}
+
+		/* Without this, the rule above beats the colour inherited from a
+		   surrounding <a>, so a wholly bold link renders black and -- with
+		   underlines only on hover -- looks exactly like body text. */
+		a strong, a b {
+			color: inherit;
+		}
 
 	em, i {
 		font-style: italic;
@@ -52,7 +65,7 @@
 	}
 
 	h1, h2, h3, h4, h5, h6 {
-		color: #aaaaaa;
+		color: #000000;
 		font-weight: 700;
 		line-height: 1em;
 		margin: 0 0 0.5625em 0;
@@ -161,7 +174,7 @@
 	}
 
 	header p {
-		color: #aaa;
+		color: #666;
 		position: relative;
 		margin: 0 0 1.6875em 0;
 	}
@@ -192,7 +205,7 @@
 	}
 
 		header.major h2 + p {
-			color: #aaaaaa;
+			color: #666;
 			font-size: 1.75em;
 			font-weight: 700;
 			margin-top: -0.75em;
@@ -205,7 +218,7 @@
 	}
 
 	label {
-		color: #aaaaaa;
+		color: #333;
 		display: block;
 		font-size: 0.9em;
 		font-weight: 700;
@@ -684,7 +697,7 @@
 		}
 
 		table th {
-			color: #aaaaaa;
+			color: #000000;
 			font-size: 0.9em;
 			font-weight: 700;
 			padding: 0 0.75em 0.75em 0.75em;
@@ -912,15 +925,33 @@
 
 /* Header */
 
+	/* Above the xlarge breakpoint the sidebar inherits the full 16pt body
+	   size -- 13pt everywhere below it -- which makes the column tall enough
+	   that a page's section list can fall past the bottom of the window.
+	   Bring it back in line with what every narrower screen already gets.
+	   Everything in here is sized in em, so this scales the whole column. */
+	@media screen and (min-width: 1681px) {
+
+		#header {
+			font-size: 0.82em;
+		}
+
+	}
+
 	#header {
-		background: #000000;
-		color: #cccccc;
+		background: #437CC8;
+		color: #ffffff;
 		height: 100%;
 		position: fixed;
 		text-align: center;
 		top: 0;
 		width: 23em;
-		right: 0;
+		left: 0;
+		/* The sidebar is fixed at the viewport height, so once the nav has
+		   enough items to overflow a short screen the tail of the menu is
+		   clipped and unreachable. Let it scroll instead. */
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 
 		#header h1, #header h2, #header h3, #header h4, #header h5, #header h6 {
@@ -932,11 +963,11 @@
 			}
 
 		#header header p {
-			color: #cccccc;
+			color: #ffffff;
 		}
 
 		#header a {
-			color: #cccccc;
+			color: #ffffff;
 		}
 
 			#header a:hover {
@@ -944,13 +975,39 @@
 			}
 
 		#header > header {
-			padding: 3em;
+			padding: 1.5em;
 		}
 
 			#header > header .avatar {
 				display: block;
-				margin: 0 auto 2.25em auto;
-				width: 8em;
+				margin: 0 auto 1.5em auto;
+				width: 7.7em;
+			}
+
+			/* The affiliation line is the SMU wordmark rather than text, so it
+			   needs to sit on its own line and stay within the sidebar. */
+			/* No underline on the wordmark: every link carries a 1px bottom
+			   border that appears on hover, which would draw a rule under the
+			   logo. A slight fade is the hover cue instead. */
+			#header > header .smu-logo-link {
+				-moz-transition: opacity 0.15s ease-in-out;
+				-webkit-transition: opacity 0.15s ease-in-out;
+				-o-transition: opacity 0.15s ease-in-out;
+				-ms-transition: opacity 0.15s ease-in-out;
+				transition: opacity 0.15s ease-in-out;
+				border-bottom: 0;
+				display: block;
+			}
+
+				#header > header .smu-logo-link:hover {
+					opacity: 0.75;
+				}
+
+			#header > header .smu-logo {
+				display: block;
+				height: auto;
+				margin: 0.65em auto 0 auto;
+				width: 12em;
 			}
 
 			#header > header h1 {
@@ -959,7 +1016,7 @@
 			}
 
 			#header > header p {
-				color: #cccccc;
+				color: #ffffff;
 				font-style: italic;
 				margin: 1em 0 0 0;
 			}
@@ -977,7 +1034,7 @@
 			}
 
 				#header > footer .icons li a {
-					color: #cccccc;
+					color: #ffffff;
 				}
 
 		#header > nav ul {
@@ -993,17 +1050,47 @@
 			}
 
 				#header > nav ul li a {
-					-moz-transition: none;
-					-webkit-transition: none;
-					-o-transition: none;
-					-ms-transition: none;
-					transition: none;
+					-moz-transition: background-color 0.15s ease-in-out;
+					-webkit-transition: background-color 0.15s ease-in-out;
+					-o-transition: background-color 0.15s ease-in-out;
+					-ms-transition: background-color 0.15s ease-in-out;
+					transition: background-color 0.15s ease-in-out;
 					border: 0;
 					color: #ffffff !important;
 					display: block;
-					padding: 0.85em 0;
+					padding: 0.6em 0;
+					position: relative;
 					text-decoration: none;
 				}
+
+					/* Page icon, pinned to the right edge. Absolute positioning
+					   keeps it out of the flow, so the label stays centred on
+					   the full column width rather than on the space left over.
+					   Colour is inherited, so it flips to black on .active. */
+					#header > nav ul li a[data-icon]:after {
+						-moz-osx-font-smoothing: grayscale;
+						-webkit-font-smoothing: antialiased;
+						content: attr(data-icon);
+						font-family: FontAwesome;
+						font-style: normal;
+						font-weight: normal;
+						line-height: 1;
+						opacity: 0.85;
+						position: absolute;
+						right: 1.25em;
+						top: 50%;
+						-webkit-transform: translateY(-50%);
+						-ms-transform: translateY(-50%);
+						transform: translateY(-50%);
+					}
+
+					/* Hover feedback. The links are already white, so a colour
+					   change is invisible here; lift the background instead.
+					   Excluded on the current page so hovering it does not
+					   fight with the white .active state below. */
+					#header > nav ul li a:hover:not(.active) {
+						background: #5A8FD4;
+					}
 
 					#header > nav ul li a.active {
 						background: #fff;
@@ -1014,11 +1101,383 @@
 					border-top: 0;
 				}
 
+			/* Section links for the current page, nested under its nav item.
+			   They are only written into that page's own markup, so they
+			   appear once you are on the page and nowhere else. Sitting
+			   directly under the white .active item, they read as a
+			   continuation of it rather than as new top-level entries. */
+			/* White, so the sections continue the panel of the .active item
+			   above them instead of reading as a separate dark slab. */
+			#header > nav ul li .subnav {
+				background: #ffffff;
+				margin: 0;
+				padding: 0 0 0.75em 0;
+			}
+
+				/* Override the top-level separator and the label centring:
+				   indented, left-aligned rows make the hierarchy obvious. */
+				#header > nav ul li .subnav li {
+					border-top: 0;
+					font-size: 0.9em;
+					text-align: left;
+				}
+
+					/* Indented clear of the centred top-level labels, with a
+					   chevron in the gutter, so the rows read as sections
+					   within the page above them rather than as nav items.
+					   Lengths are em against the 0.9em font size set above. */
+					/* Blue on the white panel: a clear step down from the black
+					   page label above, and it beats the white set on every
+					   nav link, which is itself !important. */
+					#header > nav ul li .subnav li a {
+						color: #2C5890 !important;
+						padding: 0.35em 1.5em 0.35em 4.5em;
+					}
+
+						#header > nav ul li .subnav li a:before {
+							-moz-osx-font-smoothing: grayscale;
+							-webkit-font-smoothing: antialiased;
+							content: '\f105';
+							font-family: FontAwesome;
+							font-style: normal;
+							font-weight: normal;
+							left: 3.1em;
+							line-height: 1;
+							opacity: 0.55;
+							position: absolute;
+							top: 50%;
+							-webkit-transform: translateY(-50%);
+							-ms-transform: translateY(-50%);
+							transform: translateY(-50%);
+						}
+
+						/* A pale blue wash rather than the sidebar blue, so the
+						   row stays part of the white panel while it lifts. */
+						#header > nav ul li .subnav li a.active {
+							background: #E4EDF9;
+						}
+
+							/* Hover has to be stronger than .active, not equal to it:
+							   sharing one style means pointing at the section you are
+							   already reading does nothing at all. Deeper wash plus
+							   darker text, so the row always answers the pointer.
+							   Listed after .active so it wins on that row too, and
+							   the colour needs !important to beat the one set on the
+							   link above, which is itself !important. */
+							#header > nav ul li .subnav li a:hover {
+								background: #CFE0F5;
+								color: #14345F !important;
+							}
+
+							/* The chevron is dimmed by default, so without this it
+							   stays faint while the row lifts on hover. */
+							#header > nav ul li .subnav li a:hover:before,
+							#header > nav ul li .subnav li a.active:before {
+								opacity: 1;
+							}
+
+								/* The section currently on screen. */
+								#header > nav ul li .subnav li a.active {
+									font-weight: 700;
+								}
+
+/* Contain floated images inside their article, so a tall float cannot
+   spill down into the article that follows. */
+
+	#main article:after {
+		clear: both;
+		content: '';
+		display: table;
+	}
+
+/* Team member rows: headshot floated left, text wrapping around it */
+
+	.person {
+		margin: 0 0 1.75em 0;
+	}
+
+		/* Contain the float so the next person starts below it. */
+		.person:after {
+			clear: both;
+			content: '';
+			display: table;
+		}
+
+		/* Applies to both a bare <img> and an <a> wrapping one, so a portrait
+		   can be linked or not without changing the layout. */
+		.person .portrait {
+			/* The source images are already circular with transparent
+			   corners, so no border-radius is needed here. */
+			border-bottom: 0;
+			display: block;
+			float: left;
+			height: auto;
+			margin: 0.35em 1.25em 0.4em 0;
+			width: 6.825em;
+		}
+
+			.person a.portrait img {
+				display: block;
+				height: auto;
+				width: 100%;
+			}
+
+		.person p {
+			margin: 0 0 0.4em 0;
+		}
+
+/* Extra room above a section heading, used on the Join the Team page.
+   Set above 2.25em because adjacent margins collapse to the larger of the
+   two, so anything at or below the preceding paragraph's bottom margin
+   would have no visible effect. */
+
+	h4.section-heading {
+		margin-top: 3em;
+	}
+
+	/* Same idea for a heading that opens a section within a page's first
+	   block, where a real <section> would draw a divider rule. */
+	h3.section-heading {
+		margin-top: 2.5em;
+	}
+
+/* A paragraph followed by a closely related one. The gap between two
+   paragraphs comes from the first one's bottom margin, since adjacent
+   margins collapse to the larger of the two -- so the class goes on the
+   paragraph above the break, not below it. */
+
+	p.tight {
+		margin-bottom: 0.9em;
+	}
+
+/* A paper reference carried in a section heading. The template sets every
+   heading link to inherit the heading's colour and drop its border, which
+   would leave this indistinguishable from the title itself, so restore the
+   link colour and step the size and weight back down from the heading. */
+
+	h1 .ref, h2 .ref, h3 .ref, h4 .ref, h5 .ref, h6 .ref {
+		color: #3A6DB0;
+		font-size: 0.8em;
+		font-weight: 400;
+		white-space: nowrap;
+	}
+
+		h1 .ref:hover, h2 .ref:hover, h3 .ref:hover,
+		h4 .ref:hover, h5 .ref:hover, h6 .ref:hover {
+			border-bottom: solid 1px #3A6DB0;
+			color: #2C5890 !important;
+		}
+
+/* Code names set in small capitals, as the journals set them: SSE, SEVN.
+   Lowercase text is required for the synthesised caps to show at all. */
+
+	.smallcaps {
+		font-size: 0.92em;
+		font-variant: small-caps;
+		letter-spacing: 0.03em;
+		text-transform: lowercase;
+	}
+
+/* Status note, e.g. whether positions are currently open */
+
+	.notice {
+		font-weight: 700;
+	}
+
+/* Subtitle under a page heading: a step down from h3 (1.75em) */
+
+	.tagline {
+		font-size: 1.4em;
+		line-height: 1.5em;
+	}
+
+/* Highlighted letters in a spelled-out acronym */
+
+	.acronym {
+		color: #3A6DB0;
+	}
+
+/* Contact details with a hanging icon */
+
+	.contact-line {
+		padding-left: 2em;
+		position: relative;
+	}
+
+		.contact-line > .contact-icon {
+			/* Taken out of the flow so every line of a multi-line address
+			   aligns at the padding edge, with the icon in the gutter. */
+			left: 0;
+			position: absolute;
+			top: 0;
+		}
+
+/* Social icon links, e.g. on the contact page */
+
+	ul.icons.social li {
+		vertical-align: middle;
+	}
+
+		/* Brand marks read better in black than in the site's teal link
+		   colour. The hover rule needs !important and higher specificity to
+		   beat the site-wide a:hover, which is itself !important. */
+		ul.icons.social li a.icon {
+			color: #000000;
+		}
+
+			ul.icons.social li a.icon:hover {
+				color: #555555 !important;
+			}
+
+		ul.icons.social li .icon:before {
+			font-size: 2.25em;
+		}
+
+		/* Icons supplied as an image rather than a font glyph (ORCID has no
+		   glyph in Font Awesome 4.2), sized to sit level with the others. */
+		ul.icons.social li .icon-img {
+			border-bottom: 0;
+			display: inline-block;
+			line-height: 1;
+			vertical-align: middle;
+		}
+
+			ul.icons.social li .icon-img img {
+				display: block;
+				height: 2em;
+				width: 2em;
+			}
+
+
+/* A float that must start below one running down the opposite side, rather
+   than sharing a line with it. */
+
+	.clear-left {
+		clear: left;
+	}
+
+/* Recent highlights: each highlight is an item in a list rather than another
+   paragraph of the same running text. An accent rule down the left marks where
+   each one starts and ends, including the first -- a separator between items
+   would leave nothing between the section heading and the first highlight, so
+   the heading would read as belonging to that highlight alone. */
+
+	.highlights article {
+		border-left: solid 4px #7FA0CC;
+		margin: 0 0 2.5em 0;
+		padding: 0.25em 0 0.25em 1.5em;
+	}
+
+/* Contain floats within a section's container. Without this a figure at the
+   end of the text has nothing after it to establish the container's height,
+   so it hangs past the section divider into whatever follows. */
+
+	#main > section > .container:after {
+		clear: both;
+		content: '';
+		display: table;
+	}
+
+/* Two or more figures presented as one column, centred in the text width.
+   Used where floating them would squeeze the text into a narrow gutter. */
+
+	.figure-stack {
+		clear: both;
+		margin: 0 0 1.75em 0;
+		text-align: center;
+	}
+
+		/* Floated, so the text runs down the side of the whole column. */
+		.figure-stack.right,
+		.figure-stack.left {
+			max-width: 45%;
+			width: 24em;
+		}
+
+			.figure-stack.right {
+				clear: right;
+				float: right;
+				margin: 0.35em 0 1.25em 1.75em;
+			}
+
+			.figure-stack.left {
+				clear: left;
+				float: left;
+				margin: 0.35em 1.75em 1.25em 0;
+			}
+
+		.figure-stack a {
+			border-bottom: 0;
+			display: block;
+			margin-top: 1.25em;
+		}
+
+			.figure-stack a:first-child {
+				margin-top: 0;
+			}
+
+			.figure-stack img {
+				display: inline-block;
+				height: auto;
+				max-width: 100%;
+				width: 24em;
+			}
+
+			.figure-stack.right img,
+			.figure-stack.left img {
+				width: 100%;
+			}
+
+			/* A figure carried at a smaller size than the rest of the column. */
+			.figure-stack .reduced img {
+				width: 70%;
+			}
+
+/* Video */
+
+	.video {
+		/* Drop below any floated image above, so the video spans the full
+		   column width rather than sharing a line with the float. The zero
+		   side margins override the browser default on <figure>. */
+		clear: both;
+		display: block;
+		/* Top margin matches the body line-height, giving one blank line
+		   between the paragraphs above and the video. */
+		margin: 1.75em 0 2.25em 0;
+	}
+
+		.video video {
+			background: #000;
+			border-radius: 5px;
+			display: block;
+			height: auto;
+			width: 100%;
+		}
+
+		.video figcaption {
+			color: #666;
+			font-size: 0.85em;
+			line-height: 1.6em;
+			margin-top: 0.85em;
+		}
+
+/* Placeholder marker for unfinished page content */
+
+	.todo {
+		background: #fafafa;
+		border-left: solid 4px #ccc;
+		color: #666;
+		display: block;
+		font-style: italic;
+		margin: 1.5em 0;
+		padding: 1em 1.25em;
+	}
+
 /* Wrapper */
 
 	#wrapper {
 		background: #fff;
-		padding-right: 23em;
+		padding-left: 23em;
 	}
 
 /* Main */
@@ -1053,7 +1512,7 @@
 	#footer {
 		background: #fafafa;
 		border-top: 0;
-		color: #c0c0c0;
+		color: #666;
 		overflow: hidden;
 		padding: 4em 0 2em 0;
 	}

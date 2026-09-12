@@ -34,8 +34,8 @@
 					width: { small: 275, medium: '20em' },
 					height: '100%',
 					animation: 'pushX',
-					position: 'top-right',
-					side: 'right',
+					position: 'top-left',
+					side: 'left',
 					orientation: 'vertical',
 					clickToHide: true,
 					html: '<div data-action="moveElement" data-args="header"></div>'
@@ -69,11 +69,10 @@
 			}
 
 		// Header.
-			var ids = [];
 
 			// Set up nav items.
 				$nav_a
-					.scrolly()
+					.scrolly(1000, 20)
 					.on('click', function(event) {
 
 						var $this = $(this),
@@ -86,34 +85,97 @@
 						// Prevent default behavior.
 							event.preventDefault();
 
-						// Remove active class from all links and mark them as locked (so scrollzer leaves them alone).
-							$nav_a
-								.removeClass('active')
-								.addClass('scrollzer-locked');
+						// Remove the active class from the links in this list only, so that
+						// picking a section in the sub-nav does not clear the active state of
+						// the page link above it. The spy below then keeps it in step as the
+						// smooth scroll runs.
+							$this.closest('ul').find('a').removeClass('active');
 
 						// Set active class on this link.
 							$this.addClass('active');
 
-					})
-					.each(function() {
-
-						var $this = $(this),
-							href = $this.attr('href'),
-							id;
-
-						// Not an internal link? Bail.
-							if (href.charAt(0) != '#')
-								return;
-
-						// Add to scrollzer ID list.
-							id = href.substring(1);
-							$this.attr('id', id + '-link');
-							ids.push(id);
-
 					});
 
-			// Initialize scrollzer.
-				$.scrollzer(ids, { pad: 300, lastHack: true });
+			// Track which section of the current page is on screen, and mark its
+			// link in the sub-nav.
+			//
+			// This does not use scrollzer, which the template applied to whole
+			// <section> elements: it treats each target's own height as the band
+			// in which that target counts as current. Our targets are headings, so
+			// that band is only one line tall and -- offset by scrollzer's pad --
+			// sits above the heading, leaving most of the page matching nothing.
+			// Measuring from one heading to the next is what we actually want.
+				var $window = $(window),
+					$sub_a = $nav.find('.subnav a'),
+					sections = [];
+
+				$sub_a.each(function() {
+
+					var $this = $(this),
+						$target = $(document.getElementById($this.attr('href').substring(1)));
+
+					if ($target.length > 0)
+						sections.push({ link: $this, target: $target });
+
+				});
+
+				if (sections.length > 0) {
+
+					var syncSubnav = function() {
+
+						var top = $window.scrollTop(),
+							// A heading counts as current once it reaches just below
+							// the top of the viewport. Keep this small: any section
+							// shorter than the offset would be skipped over, and it
+							// only has to clear the 20px that scrolly leaves above a
+							// heading it has just jumped to.
+							line = top + 80,
+							current = null,
+							i;
+
+						// The last heading above the line wins. Nothing is marked
+						// until the first heading is reached.
+							for (i = 0; i < sections.length; i++)
+								if (sections[i].target.offset().top <= line)
+									current = sections[i];
+
+						// Once the page bottom is reached there is nothing left to
+						// scroll, so the last heading may never reach the line --
+						// on every one of these pages the content below it is
+						// shorter than a viewport. Give it the bottom of the page.
+							if (top + $window.height() >= $(document).height() - 2)
+								current = sections[sections.length - 1];
+
+						$sub_a.removeClass('active');
+
+						if (current)
+							current.link.addClass('active');
+
+					};
+
+					// Also on load: at DOM-ready the banner and figures have no
+					// height yet, so the headings measure too high up the page.
+						$window.on('scroll resize load', syncSubnav);
+						syncSubnav();
+
+					// The sidebar is a fixed, scrolling column. On a short window the
+					// section list can sit past its bottom edge, where the rows are
+					// unreachable -- or worse, half-cut and awkward to even hover. If
+					// that is the case, scroll the column so the whole list shows.
+						var revealSubnav = function() {
+
+							var $list = $sub_a.first().closest('.subnav'),
+								overflow = $list[0].offsetTop + $list.outerHeight() - $header.height();
+
+							if (overflow > 0)
+								$header.scrollTop(overflow + 12);
+
+						};
+
+						$window.on('load', revealSubnav);
+						revealSubnav();
+
+				}
 
 	});
 
