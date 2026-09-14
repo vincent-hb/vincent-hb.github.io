@@ -128,3 +128,17 @@
 			font-size: 14px;
 			width: 44px;
 		}
+
+/* STRIDES introduction: below 736px the two columns become one. A 40% logo
+   would leave the acronym line only a couple of words wide, so the badge sits
+   above the text at a size that still reads. */
+
+	.group-intro .image.left {
+		float: none;
+		margin: 0 0 1.5em 0;
+		max-width: 60%;
+	}
+
+	.group-intro-text {
+		overflow: visible;
+	}

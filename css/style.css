@@ -1356,6 +1356,21 @@
 		clear: left;
 	}
 
+/* The STRIDES introduction, as two columns: logo left, text right. The text
+   sits in its own block formatting context, so it forms a column beside the
+   floated logo instead of wrapping back underneath it once it runs past the
+   bottom of the image. */
+
+	.group-intro:after {
+		clear: both;
+		content: '';
+		display: table;
+	}
+
+		.group-intro-text {
+			overflow: hidden;
+		}
+
 /* Recent highlights: each highlight is an item in a list rather than another
    paragraph of the same running text. An accent rule down the left marks where
    each one starts and ends, including the first -- a separator between items
